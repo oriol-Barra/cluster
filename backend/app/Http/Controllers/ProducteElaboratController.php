@@ -101,6 +101,62 @@ class ProducteElaboratController extends Controller
             'productes' => $productes,
         ], 200);
     }
+    public function update(Request $request, $id)
+    {
+        // Validar los datos enviados
+        $validatedData = $request->validate([
+            'nom' => 'required|string|max:255',
+            'preu' => 'required|numeric|min:0',
+            'descripcio' => 'nullable|string',
+            'tipus' => 'required|string|max:255',
+            'empresa' => 'required|string', // Puede ser nombre o CIF
+            'recepta' => 'nullable|array',
+            'recepta.*.producte_id' => 'required_with:recepta|exists:productes,id',
+            'recepta.*.quantitat' => 'required_with:recepta|numeric|min:1',
+            'tipus_impositiu'=>'required|numeric|min:0',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        try {
+            // Buscar la empresa por su ID
+            $producte = ProducteElaborat::findOrFail($id);
+
+            // Actualizar los datos de la empresa
+            $producte->update($validatedData);
+
+            // Respuesta exitosa
+            return response()->json([
+                'message' => 'Empresa actualitzada correctament',
+                'empresa' => $empresa,
+            ], 200);
+        } catch (\Exception $e) {
+            // Manejo de errores
+            return response()->json([
+                'message' => 'Error al actualitzar el producte',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('query');
+
+        // Validar el término de búsqueda
+        if (empty($searchTerm)) {
+            return response()->json([
+                'message' => 'no pot estar buit el formulari.',
+            ], 400);
+        }
+
+        // Buscar empresas que coincidan con el término
+        $productes = ProducteElaborat::where('nom', 'like', "%$searchTerm%")
+            ->get();
+
+        return response()->json([
+            'message' => 'Resultats de la cerca',
+            'productes' => $productes,
+        ]);
+    }
 
     
 }

@@ -37,7 +37,7 @@ Route::post('/empreses',[novaEmpresa::class, 'store']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/register', [RegisterController::class, 'register']);
-Route::post('/novaEmpresa', [empresaController::class, 'store'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->post('/novaEmpresa', [empresaController::class, 'store']);
 Route::get('/buscarEmpreses', [EmpresaController::class, 'search']);
 Route::get('/empresa/{id}', [EmpresaController::class, 'getEmpresa']);
 Route::put('/empresa/{id}', [EmpresaController::class, 'update']);
@@ -48,6 +48,7 @@ Route::get('/empreses', [EmpresaController::class, 'getEmpreses']);
 Route::get('/productes', [ProducteElaboratController::class, 'getAllProductes']);
 Route::post('/checkout',[OrderController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/orders',[OrderController::class,'index'])->middleware('auth:sanctum');
+Route::get('/buscarEmpreses', [ProducteElaboratController::class, 'search']);
 
 
 
