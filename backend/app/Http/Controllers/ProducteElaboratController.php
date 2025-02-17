@@ -157,6 +157,30 @@ class ProducteElaboratController extends Controller
             'productes' => $productes,
         ]);
     }
+    public function getProducte($id)
+    {
+        try {
+            // Buscar la empresa por ID
+            $producte = ProducteElaborat::find($id);
+
+            if (!$producte) {
+                return response()->json([
+                    'message' => 'producte trobat.',
+                ], 404);
+            }
+
+            return response()->json([
+                'message' => 'producte trobat.',
+                'producte' => $producte,
+            ], 200);
+        } catch (\Exception $e) {
+            // Manejo de errores
+            return response()->json([
+                'message' => 'Error.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
 
     
 }

@@ -60,7 +60,7 @@
             <router-link v-if="rol === 'admin'" to="/NouProducte">
               <button class="dropdown-item">Nou porducte</button>
             </router-link>
-            <router-link v-if="rol === 'admin'" to="">
+            <router-link v-if="rol === 'admin'" to="/editaProducte">
               <button class="dropdown-item">edita producte</button>
             </router-link>
             <button

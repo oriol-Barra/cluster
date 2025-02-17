@@ -2,7 +2,7 @@
     <div class="min-h-screen flex flex-col justify-center items-center bg-cover">
       <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h1 class="text-3xl font-bold mb-8 text-center">
-          Buscar Empresa
+          Buscar producte
         </h1>
         <input
           v-model="searchQuery"
@@ -11,27 +11,27 @@
           placeholder="Buscar empresa..."
           class="form-input mt-1 block w-full h-12 rounded px-4 border border-gray-300 mb-4"
         />
-        <ul v-if="empreses.length > 0">
+        <ul v-if="productes.length > 0">
           <li
-            v-for="empresa in empreses"
-            :key="empresa.id"
-            @click="mostrarDetalls(empresa.id)"
+            v-for="producte in productes"
+            :key="producte.id"
+            @click="mostrarDetalls(producte.id)"
             class="border-b border-gray-300 py-2"
           >
-            {{ empresa.nom }} - {{ empresa.CIFF }}
+            {{ producte.nom }}
           </li>
         </ul>
         <p v-else class="text-gray-500">No s'han trobat resultats.</p>
       </div>
      <!-- Formulario de edición -->
-    <div v-if="empresaSeleccionada" class="mt-8 p-4 border rounded shadow">
+    <div v-if="producteSeleccionat" class="mt-8 p-4 border rounded shadow">
       <h2 class="text-xl font-bold mb-4">Editar Empresa</h2>
       <form @submit.prevent="guardarCambios">
         <div class="mb-4">
           <label class="block text-gray-700" for="nom">Nom</label>
           <input
             id="nom"
-            v-model="empresaSeleccionada.nom"
+            v-model="producteSeleccionat.nom"
             class="form-input mt-1 block w-full h-12 rounded px-4 border border-gray-300"
             type="text"
           />
@@ -64,7 +64,8 @@
             v-model="empresaSeleccionada.descripcio"
             class="form-textarea mt-1 block w-full rounded px-4 border border-gray-300"
             rows="4"
-          ></textarea>
+          >
+        </textarea>
         </div>
 
         <button
@@ -85,8 +86,8 @@
     data() {
       return {
         searchQuery: '',
-        empreses: [],
-        empresaSeleccionada: null, // Inicializar con null o {}
+        productes: [],
+        producteSeleccionat: null, // Inicializar con null o {}
 
       };
     },
@@ -104,16 +105,16 @@
             },
           });
   
-          this.empreses = response.data.empreses;
+          this.productes = response.data.productes;
         } catch (error) {
           console.error(error.response?.data || error.message);
-          this.empreses = [];
+          this.productes = [];
         }
       },
       async mostrarDetalls(id) {
       try {
-        const response = await axios.get(`http://localhost:8088/api/empresa/${id}`);
-        this.empresaSeleccionada = response.data.empresa; // Asignar los detalles de la empresa seleccionada
+        const response = await axios.get(`http://localhost:8088/api/producte/${id}`);
+        this.producteSeleccionat = response.data.producte; // Asignar los detalles de la empresa seleccionada
       } catch (error) {
         console.error(error.response?.data || error.message);
         alert('Error al cargar los detalles de la empresa.');

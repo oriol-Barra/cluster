@@ -9,6 +9,8 @@ import novaEmpresa from '../components/novaEmpresa.vue';
 import EditaEmpresa from '../components/EditaEmpresa.vue';
 import dashboard from '../components/dashboard.vue';
 import NouProducte from '../components/NouProducte.vue';
+import editaProducte from '../components/editaProducte.vue';
+
 
 
 
@@ -64,6 +66,11 @@ const routes = [
     path: '/NouProducte',
     name: 'NouProducte',
     component: NouProducte
+  },
+  {
+    path: '/editaProducte',
+    name: 'editaProducte',
+    component: editaProducte
   }
 ];
 

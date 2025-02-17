@@ -48,7 +48,9 @@ Route::get('/empreses', [EmpresaController::class, 'getEmpreses']);
 Route::get('/productes', [ProducteElaboratController::class, 'getAllProductes']);
 Route::post('/checkout',[OrderController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/orders',[OrderController::class,'index'])->middleware('auth:sanctum');
-Route::get('/buscarEmpreses', [ProducteElaboratController::class, 'search']);
+Route::get('/buscarProductes', [ProducteElaboratController::class, 'search']);
+Route::get('/producte/{id}', [ProducteElaboratController::class, 'getProducte']);
+
 
 
 
